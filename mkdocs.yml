@@ -1,0 +1,4 @@
+site_name: UnMTA Docs
+site_url: https://unmta.github.io
+theme:
+  name: material
