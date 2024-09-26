@@ -1,5 +1,5 @@
 site_name: UnMTA Docs
-site_url: https://unmta.github.io
+site_url: https://unmta.com
 nav:
   - Overview: index.md
   - Getting Started: getting-started.md
