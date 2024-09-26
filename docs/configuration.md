@@ -38,4 +38,4 @@ level = "smtp" # error, warn, info, debug, smtp
 
 !!! note
 
-    The `config` directory will also house the configuration files for your [plugins](/writing-plugins/#configuration).
+    The `config` directory will also house the configuration files for your [plugins](writing-plugins.md#configuration).

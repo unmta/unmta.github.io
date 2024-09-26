@@ -59,7 +59,7 @@ A plugin can be a mere observer, or it can take near complete control of the ser
 
 ## Configuration
 
-Plugins have read access to all server and plugin configuration parameters as defined in the default [Configuration File](/configuration). Additionally, you can define plugin-specific parameters in one of two ways:
+Plugins have read access to all server and plugin configuration parameters as defined in the default [Configuration File](configuration.md). Additionally, you can define plugin-specific parameters in one of two ways:
 
 1. Add to the `[plugins]` section in the `unfig.toml` file:
 
@@ -226,20 +226,35 @@ SMTP Hooks are events triggered during an SMTP session. UnMTA allows you to atta
 
 There are two additional hooks that relate to the server itself: `onServerStart`, and `onServerStop`. Unlike SMTP Hooks, they accept no parameters and can return no values. The `onServerStart` hook can be used to [establish database connections](#global-context), etc, while the `onServerStop` hook may be used to close database connections and perform cleanup tasks when the server is shutdown.
 
+## Message Data
+
+The message body data (what the client sends after the `DATA` command and before the `<CRLF>.<CRLF>` command) can be accessed via a [PassThrough Stream](https://nodejs.org/api/stream.html#class-streampassthrough){:target="\_blank"} under `session.dataStream`. This data stream becomes available on the `onDataStart` hook and is removed during `onDataEnd`.
+
+```typescript
+export const examplePlugin: SmtpPlugin = {
+  onDataStart: async (session) => {
+    const writeStream = fs.createWriteStream(filePath);
+    session.dataStream?.pipe(writeStream);
+  },
+};
+```
+
 ## Responses
 
 All SMTP Hooks, except `onClose`, can _optionally_ return an `accept`, `defer`, or `reject` response. If a plugin returns a response, the server will skip any other plugins for that hook during the given connection. By not returning any value, the plugin allows the server to continue calling other plugins for the current hook.
+
+If no response is provided by any plugin, the default response will be an `accept` response with two exceptions: `onRcptTo` and `onAuth` but require a plugin to return an `accept` response before proceeding.
 
 !!! tip
 
     Choosing the correct response code and message can be challenging. Certain responses are not permissible depending on the phase of the SMTP session. UnMTA has created "guardrail" response classes that make it easy to say the right thing at the right time.
 
-```typescript hl_lines="2 3 7 8 11 12"
-onConnect: async (session) => {
+```typescript hl_lines="3 4 7 8 11 12"
+export const examplePlugin: SmtpPlugin = {
+  onConnect: async (session) => {
     doStuff();
     // No response returned. Other onConnect plugins will be called
   },
-export const examplePlugin: SmtpPlugin = {
   onHelo: (session) => {
     // Don't call any other plugins, just send an accept response
     return SmtpResponse.Helo.accept();
@@ -297,7 +312,7 @@ The logger supports the following log levels:
 | 3     | debug  | Typically used during development or troubleshooting                                                    |
 | 4     | smtp   | Displays full SMTP client<->server chatter                                                              |
 
-To setup log rotation and other advanced logging features, see [Deploying to Production](/deploying-to-production)
+To setup log rotation and other advanced logging features, see [Deploying to Production](deploying-to-production.md)
 
 ## Writing Public Plugins
 

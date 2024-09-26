@@ -25,7 +25,7 @@ npm i @unmta/smtp-server
 Now let’s create an index.ts or index.js file to bootstrap the server. Feel free to use either TypeScript or JavaScript. We’ll be using TypeScript in our examples.
 
 ```typescript title="index.ts"
-import { SmtpServer } from "@unmta/smtp-server";
+import { SmtpServer } from '@unmta/smtp-server';
 
 const server = new SmtpServer();
 server.start();
@@ -43,4 +43,4 @@ tsx index.ts
 [info]: UnMTA SMTP server is running on localhost:2525
 ```
 
-Congratulations! You’re running the UnMTA SMTP Server. What can it do at this point? Absolutely nothing. Let’s fix that by learning about the [Configuration Options](/configuration) and [Writing Plugins](/writing-plugins)
+Congratulations! You’re running the UnMTA SMTP Server. What can it do at this point? Absolutely nothing. Let’s fix that by learning about the [Configuration Options](configuration.md) and [Writing Plugins](writing-plugins.md)
