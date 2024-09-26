@@ -1,4 +1,31 @@
 site_name: UnMTA Docs
 site_url: https://unmta.github.io
+nav:
+  - Overview: index.md
+  - Getting Started: getting-started.md
+  - Configuration: configuration.md
+  - Writing Plugins: writing-plugins.md
+  - Deploying to Production: deploying-to-production.md
 theme:
   name: material
+  palette:
+    scheme: slate
+    primary: black
+  logo: assets/un.svg
+  favicon: assets/favicon.png
+  features:
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+      anchor_linenums: true
+      linenums: true
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
