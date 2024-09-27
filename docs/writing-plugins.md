@@ -167,6 +167,31 @@ export const examplePlugin: SmtpPlugin = {
 
     All configuration parameters are _readonly_
 
+### Setting a Default Configuration
+
+If your plugin requires its own configuration parameters, it should set a default configuration object via `defaultConfig`:
+
+```typescript hl_lines="5 6 7 11"
+interface DefaultConfig {
+  readonly doStuff: boolean;
+}
+
+const defaultConfig: DefaultConfig = {
+  doStuff: true,
+};
+
+export const examplePlugin: SmtpPlugin = {
+  pluginName: 'examplePlugin',
+  defaultConfig: defaultConfig,
+
+  onConnect: async (session: SmtpPluginSession) => {
+    if (session.unfig.plugins.examplePlugin.doStuff) {
+      // ...
+    }
+  },
+};
+```
+
 ## Global Context
 
 Many plugins will also have the need to reference data that transcends the life of a given connection. For example, your plugin may want establish a database connection. That's where the global SMTP Context fits in.
