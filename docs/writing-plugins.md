@@ -57,48 +57,6 @@ That’s it. The server will now apply the `examplePlugin`’s logic to the `onR
 
 A plugin can be a mere observer, or it can take near complete control of the server. Within a plugin, you can access data from a database, store session data, pass messages to other plugins, determine the server’s responses, and more. To learn how to make the most of plugins, let’s dig into the remaining fundamentals.
 
-## Configuration
-
-Plugins have read access to all server and plugin configuration parameters as defined in the default [Configuration File](configuration.md). Additionally, you can define plugin-specific parameters in one of two ways:
-
-1. Add to the `[plugins]` section in the `unfig.toml` file:
-
-   ```toml title="config/unfig.toml"
-   [plugins]
-
-   [plugins.examplePlugin]
-   doStuff=true
-   ```
-
-2. Create a new TOML configuration file in the `config/` directory using the `pluginName` of your plugin:
-
-```toml title="config/examplePlugin.toml"
-doStuff=true
-```
-
-!!! note
-
-    Parameters set in an external config file (Ex: `config/yourPluginName.toml`) take precedence over parameters set in the `config/unfig.toml` file (Ex: `[plugins.yourPluginName]`).
-
-### Reading Configuration Data
-
-```typescript hl_lines="1 5 6"
-import { unfig } from '@unmta/smtp-server';
-export const examplePlugin: SmtpPlugin = {
-  // ...
-  onConnect: async (session) => {
-    const authEnabled = unfig.auth.enable;
-    const doStuff = unfig.plugins.examplePlugin.doStuff;
-    // ...
-  },
-  // ...
-};
-```
-
-!!! warning
-
-    All configuration parameters are _readonly_
-
 ## Sessions
 
 Session data is a per-connection store of information set by the server, other plugins, and your plugins. Plugins have read access to session data set by the server and by other plugins, and read/write access to its own session data. Let's take a look at the server-level session data.
@@ -119,6 +77,8 @@ Session data is a per-connection store of information set by the server, other p
 | **dataStream**        | `PassThrough` or `null`     | Incoming message data stream                                                             |
 | **sender**            | `EnvelopeAddress` or `null` | The sender specified via `MAIL FROM`                                                     |
 | **recipients**        | `EnvelopeAddress[]`         | The recipient(s) specified during `RCPT TO`                                              |
+| **unfig**             | `Unfig`                     | All configuration parameters                                                             |
+| **logger**            | `PluginLogger`              | The system logger                                                                        |
 
 #### Session Phases
 
@@ -165,6 +125,47 @@ const examplePlugin: SmtpPlugin = {
   },
 };
 ```
+
+## Configuration
+
+Plugins have read access to all server and plugin configuration parameters as defined in the default [Configuration File](configuration.md). Additionally, you can define plugin-specific parameters in one of two ways:
+
+1. Add to the `[plugins]` section in the `unfig.toml` file:
+
+   ```toml title="config/unfig.toml"
+   [plugins]
+
+   [plugins.examplePlugin]
+   doStuff=true
+   ```
+
+2. Create a new TOML configuration file in the `config/` directory using the `pluginName` of your plugin:
+
+```toml title="config/examplePlugin.toml"
+doStuff=true
+```
+
+!!! note
+
+    Parameters set in an external config file (Ex: `config/yourPluginName.toml`) take precedence over parameters set in the `config/unfig.toml` file (Ex: `[plugins.yourPluginName]`).
+
+### Reading Configuration Data
+
+```typescript hl_lines="4 5"
+export const examplePlugin: SmtpPlugin = {
+  // ...
+  onConnect: async (session) => {
+    const authEnabled = session.unfig.auth.enable;
+    const doStuff = session.unfig.plugins.examplePlugin.doStuff;
+    // ...
+  },
+  // ...
+};
+```
+
+!!! warning
+
+    All configuration parameters are _readonly_
 
 ## Global Context
 
@@ -224,7 +225,12 @@ SMTP Hooks are events triggered during an SMTP session. UnMTA allows you to atta
 
 ### Server Hooks
 
-There are two additional hooks that relate to the server itself: `onServerStart`, and `onServerStop`. Unlike SMTP Hooks, they accept no parameters and can return no values. The `onServerStart` hook can be used to [establish database connections](#global-context), etc, while the `onServerStop` hook may be used to close database connections and perform cleanup tasks when the server is shutdown.
+There are two additional hooks that relate to the server itself: `onServerStart`, and `onServerStop`. Unlike SMTP Hooks, they can not return any responses. The `onServerStart` hook can be used to [establish database connections](#global-context), etc, while the `onServerStop` hook may be used to close database connections and perform cleanup tasks when the server is shutdown.
+
+| Hook              | Parameters    | Description                         |
+| ----------------- | ------------- | ----------------------------------- |
+| **onServerStart** | unfig, logger | Called when the sever is starting   |
+| **onServerStop**  | unfig, logger | Called when the server is stopping. |
 
 ## Message Data
 
