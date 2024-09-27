@@ -1,0 +1,1468 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.unmta.com/writing-plugins/">
+      
+      
+        <link rel="prev" href="../configuration/">
+      
+      
+        <link rel="next" href="../deploying-to-production/">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.38">
+    
+    
+      
+        <title>Writing Plugins - UnMTA Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#writing-plugins" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="UnMTA Docs" class="md-header__button md-logo" aria-label="UnMTA Docs" data-md-component="logo">
+      
+  <img src="../assets/un.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UnMTA Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Writing Plugins
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="UnMTA Docs" class="md-nav__button md-logo" aria-label="UnMTA Docs" data-md-component="logo">
+      
+  <img src="../assets/un.svg" alt="logo">
+
+    </a>
+    UnMTA Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Writing Plugins
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Writing Plugins
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#plugins-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugins Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sessions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sessions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-session-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Session Data
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Session Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Phases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-server-session-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading Server Session Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugin-session-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugin Session Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-configuration-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading Configuration Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-a-default-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting a Default Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hooks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smtp-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMTP Hooks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Hooks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Responses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-public-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Public Plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing Public Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-good-plugin-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      A good plugin example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-bad-plugin-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      A bad plugin example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploying-to-production/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploying to Production
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#plugins-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugins Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sessions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sessions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-session-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Session Data
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Session Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Phases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-server-session-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading Server Session Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugin-session-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugin Session Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-configuration-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading Configuration Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-a-default-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting a Default Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Global Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hooks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hooks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smtp-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      SMTP Hooks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Hooks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Responses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-public-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Public Plugins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing Public Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-good-plugin-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      A good plugin example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-bad-plugin-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      A bad plugin example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="writing-plugins">Writing Plugins</h1>
+<h2 id="plugins-overview">Plugins Overview</h2>
+<p>Plugins are the core component UnMTA. Without them, the server can’t do anything besides reject mail.</p>
+<p>Plugins bind to one or more server events, called <a href="#hooks">Hooks</a>. A plugin can read and modify <a href="#sessions">Session</a> data to guide its behavior. After performing its designated function, a plugin can either trigger a <a href="#responses">Response</a> to the client or allow the server to continue processing other plugins and hooks.</p>
+<hr />
+<p>Writing plugins for UnMTA is designed to be quick and easy. Let’s take a look at a basic example. This plugin binds to the <code>onRcptTo</code> hook and will accept <code>peter.gibbons@initech.com</code>, defer <code>milton.waddams@initech.com</code>, and reject all others.</p>
+<p>Let’s create a <code>plugins</code> directory, if we haven’t already, and add a file called <code>examplePlugin.ts</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>mkdir<span class="w"> </span>plugins
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>touch<span class="w"> </span>plugins/examplePlugin.ts
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">plugins/examplePlugin.ts</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">SmtpPlugin</span><span class="p">,</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@unmta/smtp-server&#39;</span><span class="p">;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nx">pluginName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;examplePlugin&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nx">onRcptTo</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">,</span><span class="w"> </span><span class="nx">recipient</span><span class="p">,</span><span class="w"> </span><span class="nx">command</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">address</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;peter.gibbons@initech.com&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">RcptTo</span><span class="p">.</span><span class="nx">accept</span><span class="p">();</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">address</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;milton.waddams@initech.com&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">RcptTo</span><span class="p">.</span><span class="nx">defer</span><span class="p">(</span><span class="mf">421</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Yeah, we can&#39;t actually find a record of him being a current employee here&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">RcptTo</span><span class="p">.</span><span class="nx">reject</span><span class="p">();</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A unique <code>pluginName</code> property is required as it allows the plugin to store <a href="#plugin-session-data">session data</a> within its own namespace and allows other plugins to access that session data.</p>
+</div>
+<p>We can now add this plugin to our SMTP Server like so:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">index.ts</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="hll"><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">SmtpServer</span><span class="p">,</span><span class="w"> </span><span class="nx">smtpPluginManager</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@unmta/smtp-server&#39;</span><span class="p">;</span>
+</span><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="hll"><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./plugins/examplePlugin&#39;</span><span class="p">;</span>
+</span><a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="hll"><span class="nx">smtpPluginManager</span><span class="p">.</span><span class="nx">loadPlugins</span><span class="p">([</span><span class="nx">examplePlugin</span><span class="p">]);</span>
+</span><a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">SmtpServer</span><span class="p">();</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="nx">server</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<p>That’s it. The server will now apply the <code>examplePlugin</code>’s logic to the <code>onRcptTo</code> hook.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Plugins will be called in the order they’re loaded via the <code>loadPlugins</code> method.</li>
+<li>A plugin can contain one or many event hooks</li>
+</ul>
+</div>
+<p>A plugin can be a mere observer, or it can take near complete control of the server. Within a plugin, you can access data from a database, store session data, pass messages to other plugins, determine the server’s responses, and more. To learn how to make the most of plugins, let’s dig into the remaining fundamentals.</p>
+<h2 id="sessions">Sessions</h2>
+<p>Session data is a per-connection store of information set by the server, other plugins, and your plugins. Plugins have read access to session data set by the server and by other plugins, and read/write access to its own session data. Let's take a look at the server-level session data.</p>
+<h3 id="server-session-data">Server Session Data</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>id</strong></td>
+<td><code>number</code></td>
+<td>A unique identifier for the session</td>
+</tr>
+<tr>
+<td><strong>activeConnections</strong></td>
+<td><code>number</code></td>
+<td>Total number of active connections</td>
+</tr>
+<tr>
+<td><strong>startTime</strong></td>
+<td><code>number</code></td>
+<td>The time the session started (<a href="https://mzl.la/3XHjKv1" target="_blank"><code>Date.now()</code></a>)</td>
+</tr>
+<tr>
+<td><strong>remoteAddress</strong></td>
+<td><code>string</code></td>
+<td>The remote IP address of the client</td>
+</tr>
+<tr>
+<td><strong>phase</strong></td>
+<td><code>string</code></td>
+<td>The current <a href="#session-phases">phase</a> of the SMTP session</td>
+</tr>
+<tr>
+<td><strong>greetingType</strong></td>
+<td><code>string</code> or <code>null</code></td>
+<td>The greeting type used by the client (<code>HELO</code> or <code>EHLO</code>)</td>
+</tr>
+<tr>
+<td><strong>isSecure</strong></td>
+<td><code>boolean</code></td>
+<td>Whether the connection is secured via TLS or STARTTLS</td>
+</tr>
+<tr>
+<td><strong>isAuthenticated</strong></td>
+<td><code>boolean</code></td>
+<td>Whether the client has authenticated successfully</td>
+</tr>
+<tr>
+<td><strong>isDataMode</strong></td>
+<td><code>boolean</code></td>
+<td>Whether the session is currently receiving data in <code>DATA</code> mode</td>
+</tr>
+<tr>
+<td><strong>dataStream</strong></td>
+<td><code>PassThrough</code> or <code>null</code></td>
+<td>Incoming message data stream</td>
+</tr>
+<tr>
+<td><strong>sender</strong></td>
+<td><code>EnvelopeAddress</code> or <code>null</code></td>
+<td>The sender specified via <code>MAIL FROM</code></td>
+</tr>
+<tr>
+<td><strong>recipients</strong></td>
+<td><code>EnvelopeAddress[]</code></td>
+<td>The recipient(s) specified during <code>RCPT TO</code></td>
+</tr>
+<tr>
+<td><strong>unfig</strong></td>
+<td><code>Unfig</code></td>
+<td>All configuration parameters</td>
+</tr>
+<tr>
+<td><strong>logger</strong></td>
+<td><code>PluginLogger</code></td>
+<td>The system logger</td>
+</tr>
+</tbody>
+</table>
+<h4 id="session-phases">Session Phases</h4>
+<p>The session <code>phase</code> is primarily used by the server to ensure things are happening in their proper order. However, it can be useful for some plugins to know where they are in a transaction when, say, an <code>RSET</code> command is issued.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>connection</strong></td>
+<td>Initial connection before any commands</td>
+</tr>
+<tr>
+<td><strong>auth</strong></td>
+<td>Authentication phase</td>
+</tr>
+<tr>
+<td><strong>helo</strong></td>
+<td><code>HELO</code>/<code>EHLO</code> command</td>
+</tr>
+<tr>
+<td><strong>sender</strong></td>
+<td><code>MAIL FROM</code> command</td>
+</tr>
+<tr>
+<td><strong>recipient</strong></td>
+<td><code>RCPT TO</code> command</td>
+</tr>
+<tr>
+<td><strong>data</strong></td>
+<td>After <code>DATA</code> command and during data reception</td>
+</tr>
+<tr>
+<td><strong>postdata</strong></td>
+<td>After data reception has completed</td>
+</tr>
+</tbody>
+</table>
+<h4 id="reading-server-session-data">Reading Server Session Data</h4>
+<p>Accessing the session data from within a plugin is as simple as referencing the property directly from the <code>session</code> object:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nx">pluginName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;examplePlugin&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="hll"><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span><span class="w"> </span><span class="c1">// Ex: 123</span>
+</span><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Server session properties are <em>readonly</em></p>
+</div>
+<h3 id="plugin-session-data">Plugin Session Data</h3>
+<p>Plugins can read/write to their own namespace (as denoted by their <code>pluginName</code> property). Additionally, plugins may read from other plugins session data using their respective <code>pluginName</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nx">pluginName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;examplePlugin&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="w">    </span><span class="nx">session</span><span class="p">.</span><span class="nx">setOwnPluginData</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;value&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Sets session data in the examplePlugin namespace</span>
+</span><a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="hll"><span class="w">    </span><span class="nx">session</span><span class="p">.</span><span class="nx">getOwnPluginData</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Returns: &#39;value&#39;</span>
+</span><a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="hll"><span class="w">    </span><span class="nx">session</span><span class="p">.</span><span class="nx">getPluginData</span><span class="p">(</span><span class="s1">&#39;anotherPluginName&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;key&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Returns value for &#39;key&#39; parameter from an external plugin, if set</span>
+</span><a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="configuration">Configuration</h2>
+<p>Plugins have read access to all server and plugin configuration parameters as defined in the default <a href="../configuration/">Configuration File</a>. Additionally, you can define plugin-specific parameters in one of two ways:</p>
+<ol>
+<li>Add to the <code>[plugins]</code> section in the <code>unfig.toml</code> file:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">config/unfig.toml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">[plugins]</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="k">[plugins.examplePlugin]</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="n">doStuff</span><span class="o">=</span><span class="kc">true</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Create a new TOML configuration file in the <code>config/</code> directory using the <code>pluginName</code> of your plugin:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">config/examplePlugin.toml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">doStuff</span><span class="o">=</span><span class="kc">true</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Parameters set in an external config file (Ex: <code>config/yourPluginName.toml</code>) take precedence over parameters set in the <code>config/unfig.toml</code> file (Ex: <code>[plugins.yourPluginName]</code>).</p>
+</div>
+<h3 id="reading-configuration-data">Reading Configuration Data</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span>
+<span class="normal"><a href="#__codelineno-7-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="c1">// ...</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="hll"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">authEnabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">session</span><span class="p">.</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">enable</span><span class="p">;</span>
+</span><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="hll"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">doStuff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">session</span><span class="p">.</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">examplePlugin</span><span class="p">.</span><span class="nx">doStuff</span><span class="p">;</span>
+</span><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="c1">// ...</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All configuration parameters are <em>readonly</em></p>
+</div>
+<h3 id="setting-a-default-configuration">Setting a Default Configuration</h3>
+<p>If your plugin requires its own configuration parameters, it should set a default configuration object via <code>defaultConfig</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kd">interface</span><span class="w"> </span><span class="nx">DefaultConfig</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span><span class="k">readonly</span><span class="w"> </span><span class="nx">doStuff</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="p">}</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="hll"><span class="kd">const</span><span class="w"> </span><span class="nx">defaultConfig</span><span class="o">:</span><span class="w"> </span><span class="kt">DefaultConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="hll"><span class="w">  </span><span class="nx">doStuff</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+</span><a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="hll"><span class="p">};</span>
+</span><a id="__codelineno-8-8" name="__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">  </span><span class="nx">pluginName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;examplePlugin&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="hll"><span class="w">  </span><span class="nx">defaultConfig</span><span class="o">:</span><span class="w"> </span><span class="kt">defaultConfig</span><span class="p">,</span>
+</span><a id="__codelineno-8-12" name="__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPluginSession</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">examplePlugin</span><span class="p">.</span><span class="nx">doStuff</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">      </span><span class="c1">// ...</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="global-context">Global Context</h2>
+<p>Many plugins will also have the need to reference data that transcends the life of a given connection. For example, your plugin may want establish a database connection. That's where the global SMTP Context fits in.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span><span class="c1">// ...</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span><span class="nx">onServerStart</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">initDatabase</span><span class="p">();</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="w">    </span><span class="c1">// Store the db connection when the server starts</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="hll"><span class="w">    </span><span class="nx">SmtpContext</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">().</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;exampleDBConnection&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">db</span><span class="p">);</span>
+</span><a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">    </span><span class="c1">// Access the db connection anywhere it&#39;s needed</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="hll"><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SmtpContext</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">().</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;exampleDBConnection&#39;</span><span class="p">);</span>
+</span><a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">  </span><span class="c1">// ...</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>Once set, the context value remains until the server is stopped or the value is overwritten.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Global values are, well, global. Use descriptive names to ensure you don't overwrite values set by 3rd party plugins.</p>
+</div>
+<h2 id="hooks">Hooks</h2>
+<p>UnMTA exposes two types of hooks: SMTP Hooks for SMTP transactions, and Server Hooks for server events. Let’s start with SMTP Hooks:</p>
+<h3 id="smtp-hooks">SMTP Hooks</h3>
+<p>SMTP Hooks are events triggered during an SMTP session. UnMTA allows you to attach to virtually every event in an SMTP transaction to shape the outcome of that event.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Hooks may be called multiple times per session if the client issues a <code>RSET</code> or another <code>HELO</code>/<code>EHLO</code> command. In some cases, your code may need to account for this fact.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>onConnect</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called when a connection is first established with a client.</td>
+</tr>
+<tr>
+<td><strong>onHelo</strong></td>
+<td><a href="#sessions"><code>session</code></a>, <code>hostname</code>, <code>verb</code></td>
+<td>Called after <code>HELO</code> / <code>EHLO</code> command. <code>verb</code> specifies which command was used.</td>
+</tr>
+<tr>
+<td><strong>onAuth</strong></td>
+<td><a href="#sessions"><code>session</code></a>, <code>username</code>, <code>password</code></td>
+<td>Called after <code>AUTH</code> command once <code>username</code> and <code>password</code> have been provided from the client.</td>
+</tr>
+<tr>
+<td><strong>onMailFrom</strong></td>
+<td><a href="#sessions"><code>session</code></a>, <code>address</code>, <code>command</code></td>
+<td>Called after <code>MAIL FROM</code>. Includes <code>EmailAddress</code> object and full <code>SmtpCommand</code>.</td>
+</tr>
+<tr>
+<td><strong>onRcptTo</strong></td>
+<td><a href="#sessions"><code>session</code></a>, <code>address</code>, <code>command</code></td>
+<td>Called after <code>RCPT TO</code>. Includes <code>EmailAddress</code> object and full <code>SmtpCommand</code>.</td>
+</tr>
+<tr>
+<td><strong>onDataStart</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the DATA command.</td>
+</tr>
+<tr>
+<td><strong>onDataEnd</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the entire message has been received from the client.</td>
+</tr>
+<tr>
+<td><strong>onQuit</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the <code>QUIT</code> command just before the connection is closed.</td>
+</tr>
+<tr>
+<td><strong>onClose</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the connection has been closed. Cannot return a response.</td>
+</tr>
+<tr>
+<td><strong>onRset</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the <code>RSET</code> command, before the server resets the session data.</td>
+</tr>
+<tr>
+<td><strong>onHelp</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the <code>HELP</code> command.</td>
+</tr>
+<tr>
+<td><strong>onNoop</strong></td>
+<td><a href="#sessions"><code>session</code></a></td>
+<td>Called after the <code>NOOP</code> command.</td>
+</tr>
+<tr>
+<td><strong>onVrfy</strong></td>
+<td><a href="#sessions"><code>session</code></a>, <code>command</code></td>
+<td>Called after the <code>VRFY</code> command. Includes full <code>SmtpCommand</code>.</td>
+</tr>
+<tr>
+<td><strong>onUnknown</strong></td>
+<td><a href="#sessions"><code>session</code></a>, <code>command</code></td>
+<td>Called after an unknown command. Includes full <code>SmtpCommand</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="server-hooks">Server Hooks</h3>
+<p>There are two additional hooks that relate to the server itself: <code>onServerStart</code>, and <code>onServerStop</code>. Unlike SMTP Hooks, they can not return any responses. The <code>onServerStart</code> hook can be used to <a href="#global-context">establish database connections</a>, etc, while the <code>onServerStop</code> hook may be used to close database connections and perform cleanup tasks when the server is shutdown.</p>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>onServerStart</strong></td>
+<td>unfig, logger</td>
+<td>Called when the sever is starting</td>
+</tr>
+<tr>
+<td><strong>onServerStop</strong></td>
+<td>unfig, logger</td>
+<td>Called when the server is stopping.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="message-data">Message Data</h2>
+<p>The message body data (what the client sends after the <code>DATA</code> command and before the <code>&lt;CRLF&gt;.&lt;CRLF&gt;</code> command) can be accessed via a <a href="https://nodejs.org/api/stream.html#class-streampassthrough" target="_blank">PassThrough Stream</a> under <code>session.dataStream</code>. This data stream becomes available on the <code>onDataStart</code> hook and is removed during <code>onDataEnd</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">  </span><span class="nx">onDataStart</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">writeStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="nx">filePath</span><span class="p">);</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">    </span><span class="nx">session</span><span class="p">.</span><span class="nx">dataStream</span><span class="o">?</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">writeStream</span><span class="p">);</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="responses">Responses</h2>
+<p>All SMTP Hooks, except <code>onClose</code>, can <em>optionally</em> return an <code>accept</code>, <code>defer</code>, or <code>reject</code> response. If a plugin returns a response, the server will skip any other plugins for that hook during the given connection. By not returning any value, the plugin allows the server to continue calling other plugins for the current hook.</p>
+<p>If no response is provided by any plugin, the default response will be an <code>accept</code> response with two exceptions: <code>onRcptTo</code> and <code>onAuth</code> but require a plugin to return an <code>accept</code> response before proceeding.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Choosing the correct response code and message can be challenging. Certain responses are not permissible depending on the phase of the SMTP session. UnMTA has created "guardrail" response classes that make it easy to say the right thing at the right time.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">  </span><span class="nx">onConnect</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="hll"><span class="w">    </span><span class="nx">doStuff</span><span class="p">();</span>
+</span><a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="hll"><span class="w">    </span><span class="c1">// No response returned. Other onConnect plugins will be called</span>
+</span><a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">  </span><span class="nx">onHelo</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="hll"><span class="w">    </span><span class="c1">// Don&#39;t call any other plugins, just send an accept response</span>
+</span><a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="hll"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Helo</span><span class="p">.</span><span class="nx">accept</span><span class="p">();</span>
+</span><a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">  </span><span class="nx">onAuth</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">,</span><span class="w"> </span><span class="nx">username</span><span class="p">,</span><span class="w"> </span><span class="nx">password</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="hll"><span class="w">    </span><span class="c1">// Don&#39;t call any other plugins, send a custom reject response</span>
+</span><a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="hll"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Auth</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="mf">535</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;5.7.8 YOU SHALL NOT PASS!&#39;</span><span class="p">);</span>
+</span><a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>Note how each hook has a corresponding SMTP response type (<code>SmtpResponse.Helo</code> for <code>HELO</code>/<code>EHLO</code>, <code>SmtpResponse.Auth</code> for <code>AUTH</code>, etc). These response types provide a default way to either <code>accept</code> (send a <code>2XX</code> or <code>3XX</code> response), defer (send a <code>4XX</code> response), or reject (send a <code>5XX</code> response).</p>
+<p>By simply calling a relevant <code>accept()</code>, <code>defer()</code>, or <code>reject()</code>, the server will issue a standard RFC-compliant response. If you want to send a non-default (but still RFC-compliant) status code, you can specify that as the first parameter in an accept/defer/reject method. And, if you'd like to add a custom message, you can specify that as the second parameter.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The easiest way to see all of the available response codes and messages is to look at the <a href="https://github.com/unmta/smtp-server/blob/main/lib/SmtpResponse.ts">SmtpResponse</a> Class</p>
+</div>
+<p>While it's recommended to rely on the guardrail response classes to ensure you stay RFC compliant, if you wish to respond with a status code and/or message that the guardrail classes don't permit, there's <code>SmtpResponseAny</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span>
+<span class="normal"><a href="#__codelineno-12-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">  </span><span class="nx">onHelo</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">    </span><span class="c1">// Return a non-standard response. Because reasons.</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="hll"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponseAny</span><span class="p">(</span><span class="mf">469</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;4.2.0 I believe you have my stapler&#39;</span><span class="p">);</span>
+</span><a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Certain responses (example, a defer response that returns a 421) will also close the connection.</li>
+</ul>
+</div>
+<h2 id="logging">Logging</h2>
+<p>Plugins can piggy-back on UnMTA's logger:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="hll"><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@unmta/smtp-server&#39;</span><span class="p">;</span>
+</span><a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">examplePlugin</span><span class="o">:</span><span class="w"> </span><span class="kt">SmtpPlugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">  </span><span class="nx">onHelo</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="hll"><span class="w">    </span><span class="nx">logger</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s1">&#39;oh hai, mark&#39;</span><span class="p">);</span>
+</span><a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>The logger supports the following log levels:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Method</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>error</td>
+<td>Uncaught exceptions and other unrecoverable issues</td>
+</tr>
+<tr>
+<td>1</td>
+<td>warn</td>
+<td>Potential problems that may not currently affect the system’s operation but could lead to future issues</td>
+</tr>
+<tr>
+<td>2</td>
+<td>info</td>
+<td>General operational messages that describe normal functioning</td>
+</tr>
+<tr>
+<td>3</td>
+<td>debug</td>
+<td>Typically used during development or troubleshooting</td>
+</tr>
+<tr>
+<td>4</td>
+<td>smtp</td>
+<td>Displays full SMTP client&lt;-&gt;server chatter</td>
+</tr>
+</tbody>
+</table>
+<p>To setup log rotation and other advanced logging features, see <a href="../deploying-to-production/">Deploying to Production</a></p>
+<h2 id="writing-public-plugins">Writing Public Plugins</h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>UnMTA welcomes 3rd party contributions!</p>
+</div>
+<p>First, let’s discuss the philosophy behind writing public plugins for use with UnMTA. Your plugin should be designed to “do the thing” it’s supposed to do, and nothing more. If you’re writing a plugin to scan for viruses, your plugin should, for example, scan for viruses and store the results in the session, and that’s all. This enables your end-users to write simple downstream plugins to handle those results however they prefer.</p>
+<h3 id="a-good-plugin-example">A good plugin example <img alt="👍" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f44d.svg" title=":thumbsup:" /></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nx">onDataEnd</span><span class="o">:</span><span class="w"> </span><span class="kt">async</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">doVirusScan</span><span class="p">();</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">  </span><span class="nx">session</span><span class="p">.</span><span class="nx">setOwnPluginData</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">);</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">  </span><span class="c1">// This will allow downstream plugins to decide how to handle the message.</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="p">},</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="a-bad-plugin-example">A bad plugin example <img alt="👎" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f44e.svg" title=":thumbsdown:" /></h3>
+<p>Many MTAs have plugins that try and do everything. Taking the virus scan example, these plugins often offer up configuration parameters on whether or not to reject the message, add a prefix to the subject line, add an X-Header, etc. The result is a far more complicated plugin than what is really needed and there will be an endless supply of use-cases that your plugin doesn’t <em>quite</em> fit.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span>
+<span class="normal"><a href="#__codelineno-15-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nx">onDataEnd</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">session</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">doVirusScan</span><span class="p">();</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">hasVirus</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">virusPlugin</span><span class="p">.</span><span class="nx">rejectInfectedEmails</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Data</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="mf">550</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Message contains a virus&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">virusPlugin</span><span class="p">.</span><span class="nx">tagInfectedEmails</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Data</span><span class="p">.</span><span class="nx">accept</span><span class="p">(</span><span class="mf">250</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Message accepted for delivery (virus detected)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">virusPlugin</span><span class="p">.</span><span class="nx">quarantineInfectedEmails</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Data</span><span class="p">.</span><span class="nx">accept</span><span class="p">(</span><span class="mf">250</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Message quarantined (virus detected)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">virusPlugin</span><span class="p">.</span><span class="nx">deleteInfectedEmails</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Data</span><span class="p">.</span><span class="nx">accept</span><span class="p">(</span><span class="mf">250</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Message deleted (virus detected)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">unfig</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">virusPlugin</span><span class="p">.</span><span class="nx">deferInfectedEmails</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">SmtpResponse</span><span class="p">.</span><span class="nx">Data</span><span class="p">.</span><span class="nx">defer</span><span class="p">(</span><span class="mf">450</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Message deferred (virus detected)&#39;</span><span class="p">);</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="w">    </span><span class="c1">// ... and on</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a><span class="w">    </span><span class="c1">// ... and on</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a><span class="w">    </span><span class="c1">// ... and on it goes</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>See the difference? Let’s keep the Simple in SMTP.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.select", "content.code.annotate"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6f25eb3.min.js"></script>
+      
+    
+  </body>
+</html>
